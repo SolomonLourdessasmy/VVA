@@ -1,0 +1,88 @@
+﻿@model Association_VVA.Models.RESA
+@using Association_VVA.Controllers
+@using Association_VVA.Models
+@{
+    Layout = "~/Views/_Layout1.cshtml";
+}
+
+<h2 style="text-decoration-line:underline; text-align:center">Modification d'une réservation</h2>
+<div class="row">
+    <div class="col-md-6 card card-deck">
+        <div id="detailHeb" class="card-body">
+            <img class="card-img-top" src="~/photoHeberge/@Model.HEBERGEMENT.PHOTOHEB" alt="Card image cap">
+            <p><strong>Nom:</strong> @Model.HEBERGEMENT.NOMHEB</p>
+            <p><strong>Type:</strong> @Model.HEBERGEMENT.TYPE_HEB.NOMTYPEHEB</p>
+            <p><strong>Nombre de place:</strong> @Model.HEBERGEMENT.NBPLACEHEB</p>
+            <p><strong>La surface:</strong> @Model.HEBERGEMENT.SURFACEHEB</p>
+            <p><strong>L'année de construction:</strong> @Model.HEBERGEMENT.ANNEEHEB</p>
+            <p><strong>Le secteur:</strong> @Model.HEBERGEMENT.SECTEURHEB</p>
+            <p><strong>L'orientation:</strong> @Model.HEBERGEMENT.ORIENTATIONHEB<p>
+            <p><strong>L'état:</strong> @Model.HEBERGEMENT.ETATHEB</p>
+            <p><strong>Le tarif:</strong> @Model.HEBERGEMENT.TARIFSEMHEB €</p>
+            @if (Model.HEBERGEMENT.INTERNET == true)
+            {
+                <p>l'internet est disponible</p>
+            }
+            else
+            {
+                <p>l'internet est non disponible</p>
+            }
+        </div>
+    </div>
+    <div align="center" class="col-md-6">
+        <form action="/Gestionnaire/ModifierReservation" method="post">
+
+            @if (DateTime.Today < Model.DATEDEBSEM)
+            {
+                <div class="form-group">
+                    <label for="hebergement">Hébergement:</label>
+                    <select class="form-control" name="noHeb" id="noHeb" required>
+                        <option selected disabled value="@Model.HEBERGEMENT.NOHEB">@Model.HEBERGEMENT.NOMHEB (logement actuel)</option>
+                        @foreach (var h in GestionnaireController.GetLesHebergementsSansResaActuelle(Model.NORESA))
+                        {
+                            <option value="@h.NOHEB">@h.NOMHEB</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="semaine">Semaine disponibles:</label>
+                    <select class="form-control" name="dateDeb" id="dateDeb" required>
+                        <option selected disabled value="@Model.SEMAINE.DATEDEBSEM">@Model.SEMAINE.DATEDEBSEM.ToShortDateString() (date début actuelle)</option>
+                        @foreach (var h in GestionnaireController.lesSamediDispo(Model.HEBERGEMENT.NOHEB))
+                        {
+                            <option value="@h.ToShortDateString()">@h.ToShortDateString()</option>
+                        }
+                    </select>
+                </div>
+
+            }
+            <div class="form-group">
+                <label for="noPlaceHeb">Date arrhes:</label>
+                <input class="form-control" type="date" name="datesArrhes" id="datesArrhes" value="@Convertir.FormatDate(Model.DATEARRHES)" />
+            </div>
+
+            <div class="form-group">
+                <label for="noPlaceHeb">Nombre d'occupant:</label>
+                <input class="form-control" type="number" name="occupant" id="occupant" placeholder="Nombre d'occupant" value="@Model.NBOCCUPANT" required />
+            </div>
+
+            <div class="form-group">
+                <label for="semaine">État de réservation:</label>
+                <select class="form-control" name="etat" id="etat" required>
+                    <option selected disabled value="@Model.ETAT_RESA.CODEETATRESA">@Model.ETAT_RESA.NOMETATRESA (etat actuel)</option>
+                    @foreach (var e in GestionnaireController.LesEtatResaSansActuelle(Model.ETAT_RESA.CODEETATRESA))
+                    {
+                        <option value="@e.CODEETATRESA">@e.NOMETATRESA</option>
+                    }
+                </select>
+            </div>
+            <input type="hidden" name="noResa" id="noResa"  value="@Model.NORESA" required />
+
+            <input class="btn btn-primary" type="submit" name="Inscrire" id="Insrire" value="Modifier" />
+        </form>
+    </div>
+</div>
+
+
+

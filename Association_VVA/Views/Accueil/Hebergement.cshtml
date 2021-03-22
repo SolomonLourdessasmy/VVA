@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Association_VVA.Models.HEBERGEMENT>
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2 style="text-decoration-line:underline; text-align:center">Les hébergements</h2>
+
+<div class="container-fluid">
+
+    <div align="center">
+        <form action="/Accueil/Hebergement" method="post">
+            <label for="dateDispo">Date disponible:</label>
+            <select name="dateDispo" id="dateDispo">
+                @if (ViewBag.Date == null)
+                {
+                    <option disabled selected>Choisir une date disponible</option>
+                }
+                else
+                {
+                    <option disabled selected value="@ViewBag.Date">@ViewBag.Date</option>
+                }
+                @foreach (var d in ViewBag.lesSamedi)
+                {
+                    <option value="@d.ToShortDateString()">@d.ToShortDateString()</option>
+                }
+            </select>
+            <label for="typeheb">type d'hébergements:</label>
+            <select name="typeheb" id="typeheb">
+                @if (ViewBag.typeheb == null)
+                {
+                    <option disabled selected>Choisir un type d'hébergement</option>
+                }
+                else
+                {
+                    <option disabled selected value="@ViewBag.typeCode">@ViewBag.typeheb</option>
+                }
+                @foreach (var t in ViewBag.type)
+                {
+                    <option value="@t.CODETYPEHEB">@t.NOMTYPEHEB</option>
+                }
+            </select>
+            <input class="btn btn-primary" type="submit" name="recherche" id="recherche" value="Rechercher" />
+        </form>
+    </div>
+
+
+    <div class="row card-deck">
+        @foreach (var item in Model)
+        {
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="~/photoHeberge/@item.PHOTOHEB" alt="Card image cap" width="250" height="200">
+                    <p><strong>Nom:</strong> @item.NOMHEB</p>
+                    <p><strong>Type:</strong> @item.TYPE_HEB.NOMTYPEHEB</p>
+                    <p><strong>Nombre de place:</strong> @item.NBPLACEHEB</p>
+                    <p><strong>La surface:</strong> @item.SURFACEHEB</p>
+                    <p><strong>L'année de construction:</strong> @item.ANNEEHEB</p>
+                    <p><strong>Le secteur:</strong> @item.SECTEURHEB</p>
+                    <p><strong>L'orientation:</strong> @item.ORIENTATIONHEB<p>
+                    <p><strong>L'état:</strong> @item.ETATHEB</p>
+                    <p><strong>Le tarif:</strong> @item.TARIFSEMHEB €</p>
+                    @if (item.INTERNET == true)
+                    {
+                        <p>l'internet est disponible</p>
+                    }
+                    else
+                    {
+                        <p>l'internet est non disponible</p>
+                    }
+                    <div align="center">
+                        <a href="/Compte/Ajout_Reservation/@item.NOHEB" class="btn btn-primary">RESERVER</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        }
+    </div>
+</div>
+

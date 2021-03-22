@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div align="center">
+                <h2 style="text-decoration-line:underline; text-align:center">CONNEXION</h2><br />
+                <form action="/Compte/Connexion" method="post">
+
+                    <div class="form-group">
+                        <label for="id">Identifiant:</label>
+                        <input class="form-control" type="text" name="id" id="id" placeholder="Entrez l'identifiant" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom">Mot de passe:</label>
+                        <input class="form-control" type="password" name="mdp" id="mdp" placeholder="Entrez le mot de passe" required />
+                    </div>
+
+                    <input class="btn btn-primary" type="submit" name="Inscrire" id="Insrire" value="CONNECTER" />
+
+                </form>
+
+                <p style="color:red">@ViewBag.Erreur</p><br />
+
+                <p><a href="/Gestionnaire/Connexion">Cliquez-ici</a> si vous êtes un gestionnaire</p>
+
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RESERVATION" Class="ReservationDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-GCQL289;Initial Catalog=RESERVATION;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RESERVATIONConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.COMPTE" Member="COMPTE">
+    <Type Name="COMPTE">
+      <Column Name="CDUSER" Type="System.String" DbType="VarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MDP" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="NOMCPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="PRENOMCPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="DATEINSCRIP" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DATEFERME" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TYPECOMPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="ADRMAILCPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="NOTELCPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="NOPORTCPTE" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="COMPTE_RESA" Member="RESA" ThisKey="CDUSER" OtherKey="CDUSER" Type="RESA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ETAT_RESA" Member="ETAT_RESA">
+    <Type Name="ETAT_RESA">
+      <Column Name="CODEETATRESA" Type="System.String" DbType="VarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NOMETATRESA" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="ETAT_RESA_RESA" Member="RESA" ThisKey="CODEETATRESA" OtherKey="CODEETATRESA" Type="RESA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HEBERGEMENT" Member="HEBERGEMENT">
+    <Type Name="HEBERGEMENT">
+      <Column Name="NOHEB" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CODETYPEHEB" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="NBPLACEHEB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SURFACEHEB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="INTERNET" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ANNEEHEB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SECTEURHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="ORIENTATIONHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="ETATHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="DESCRIHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="PHOTOHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="TARIFSEMHEB" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="HEBERGEMENT_RESA" Member="RESA" ThisKey="NOHEB" OtherKey="NOHEB" Type="RESA" />
+      <Association Name="TYPE_HEB_HEBERGEMENT" Member="TYPE_HEB" ThisKey="CODETYPEHEB" OtherKey="CODETYPEHEB" Type="TYPE_HEB" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESA" Member="RESA">
+    <Type Name="RESA">
+      <Column Name="NORESA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CDUSER" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="DATEDEBSEM" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NOHEB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CODEETATRESA" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="DATERESA" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DATEARRHES" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MONTANTARRHES" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="NBOCCUPANT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TARIFSEMRESA" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="COMPTE_RESA" Member="COMPTE" ThisKey="CDUSER" OtherKey="CDUSER" Type="COMPTE" IsForeignKey="true" />
+      <Association Name="ETAT_RESA_RESA" Member="ETAT_RESA" ThisKey="CODEETATRESA" OtherKey="CODEETATRESA" Type="ETAT_RESA" IsForeignKey="true" />
+      <Association Name="HEBERGEMENT_RESA" Member="HEBERGEMENT" ThisKey="NOHEB" OtherKey="NOHEB" Type="HEBERGEMENT" IsForeignKey="true" />
+      <Association Name="SEMAINE_RESA" Member="SEMAINE" ThisKey="DATEDEBSEM" OtherKey="DATEDEBSEM" Type="SEMAINE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SEMAINE" Member="SEMAINE">
+    <Type Name="SEMAINE">
+      <Column Name="DATEDEBSEM" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DATEFINSEM" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="SEMAINE_RESA" Member="RESA" ThisKey="DATEDEBSEM" OtherKey="DATEDEBSEM" Type="RESA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TYPE_HEB" Member="TYPE_HEB">
+    <Type Name="TYPE_HEB">
+      <Column Name="CODETYPEHEB" Type="System.String" DbType="VarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NOMTYPEHEB" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="TYPE_HEB_HEBERGEMENT" Member="HEBERGEMENT" ThisKey="CODETYPEHEB" OtherKey="CODETYPEHEB" Type="HEBERGEMENT" />
+    </Type>
+  </Table>
+</Database>

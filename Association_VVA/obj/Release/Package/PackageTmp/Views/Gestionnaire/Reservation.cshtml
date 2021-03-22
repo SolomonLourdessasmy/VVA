@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Association_VVA.Models.RESA>
+@using Association_VVA.Controllers
+@{ 
+    Layout = "~/Views/_Layout1.cshtml";
+}
+
+<h2 style="text-decoration-line:underline; text-align:center">Les réservations</h2>
+<div align="center">
+    <form action="/Gestionnaire/Reservation" method="post">
+        <label for="dateDispo">Date disponible:</label>
+        <select name="date" id="date">
+            @if (ViewBag.date == null)
+            {
+                <option disabled selected>Choisir une date disponible</option>
+            }
+            else
+            {
+                <option disabled selected value="@ViewBag.date">@ViewBag.date</option>
+            }
+            @foreach (var d in GestionnaireController.LesSemaines())
+            {
+                <option value="@d.DATEDEBSEM.ToShortDateString()">@d.DATEDEBSEM.ToShortDateString()</option>
+            }
+        </select>
+        <label for="typeheb">type d'hébergements:</label>
+        <select name="typeheb" id="typeheb">
+            @if (ViewBag.typeheb == null)
+            {
+                <option disabled selected>Choisir un type d'hébergement</option>
+            }
+            else
+            {
+                <option disabled selected value="@ViewBag.typeCode">@ViewBag.typeheb</option>
+            }
+            @foreach (var t in GestionnaireController.LesTypes())
+            {
+                <option value="@t.CODETYPEHEB">@t.NOMTYPEHEB</option>
+            }
+        </select>
+        <input class="btn btn-primary" type="submit" name="recherche" id="recherche" value="Rechercher" />
+    </form>
+</div>
+
+<div class="row card-deck">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="~/photoHeberge/@item.HEBERGEMENT.PHOTOHEB" alt="Card image cap" width="250" height="200">
+                    <p><strong>Nom:</strong> @item.HEBERGEMENT.NOMHEB</p>
+                    <p><strong>Type:</strong> @item.HEBERGEMENT.TYPE_HEB.NOMTYPEHEB</p>
+                    <p><strong>Nombre de place:</strong> @item.HEBERGEMENT.NBPLACEHEB</p>
+                    <p><strong>La surface:</strong> @item.HEBERGEMENT.SURFACEHEB</p>
+                    <p><strong>L'année de construction:</strong> @item.HEBERGEMENT.ANNEEHEB</p>
+                    <p><strong>Le secteur:</strong> @item.HEBERGEMENT.SECTEURHEB</p>
+                    <p><strong>L'orientation:</strong> @item.HEBERGEMENT.ORIENTATIONHEB<p>
+                    <p><strong>L'état:</strong> @item.HEBERGEMENT.ETATHEB</p>
+                    <p><strong>Le tarif:</strong> @item.HEBERGEMENT.TARIFSEMHEB €</p>
+                    @if (item.HEBERGEMENT.INTERNET == true)
+                    {
+                        <p>l'internet est disponible</p>
+                    }
+                    else
+                    {
+                        <p>l'internet est non disponible</p>
+                    }
+                    <hr />
+                    <p><strong>Nom prénom du client:</strong> @item.COMPTE.NOMCPTE @item.COMPTE.PRENOMCPTE</p>
+                    <p><strong>La date du réservation:</strong> @DateTime.Parse(item.DATERESA.ToString()).ToShortDateString()</p>
+                    <p><strong>Période du location:</strong> @item.SEMAINE.DATEDEBSEM.ToShortDateString() au @DateTime.Parse(item.SEMAINE.DATEFINSEM.ToString()).ToShortDateString()</p>
+                    <p><strong>Le montant de la réservation:</strong> @item.TARIFSEMRESA €</p>
+                    <p><strong>Le montant d'arrhes:</strong> @item.MONTANTARRHES €</p>
+                    <p><strong>La date d'arrhes:</strong> @if (item.DATEARRHES != null){@DateTime.Parse(item.DATEARRHES.ToString()).ToShortDateString()} </p>
+                    <p><strong>L'état du réservation:</strong> @item.ETAT_RESA.NOMETATRESA</p>
+                    <hr />
+                    @if (item.SEMAINE.DATEFINSEM <= DateTime.Today)
+                    {
+                        <div align="center">
+                            <form action="/Gestionnaire/SupprimerResa" method="post">
+                                <input type="hidden" value="@item.NORESA" name="noResa" id="noResa" />
+                                <input class="btn btn-danger" type="submit" name="suppression" id="suppression" value="Supprimer" />
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div align="center">
+                            <a href="/Gestionnaire/ModifierReservation/@item.NORESA" class="btn btn-success">Mettre à jour</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <br/>
+        </div>
+    }
+</div>
+
+

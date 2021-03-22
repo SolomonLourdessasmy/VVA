@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.125" name="Reservation">
+  <DataContextMoniker Name="/ReservationDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6f262e90-a887-4fbb-b157-87b00cf11dd2" absoluteBounds="5.625, 5.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/ReservationDataContext/COMPTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2c9a686a-ffda-489e-aad8-262364e436f1" absoluteBounds="5.64, 5.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="576265ff-0b3f-48ea-b5b9-220808fcdad0" absoluteBounds="6.25, 3, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/ReservationDataContext/ETAT_RESA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b6fa52c2-a3e5-4d1b-8125-ac65aacb0682" absoluteBounds="6.2650000000000006, 3.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c1a1da7b-002e-40a1-a523-b42491bc9b55" absoluteBounds="2.25, 7.625, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/ReservationDataContext/HEBERGEMENT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="88193993-59ca-44e9-a080-74c842f56bf8" absoluteBounds="2.265, 8.085, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="62181bc0-3153-469e-97e5-c8b00713817e" absoluteBounds="2.25, 3.375, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/ReservationDataContext/RESA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f33599ef-d841-46a3-b207-0de58f44606f" absoluteBounds="2.2649999999999997, 3.835, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.625 : 5.80370198567708); (4.25 : 5.80370198567708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ReservationDataContext/COMPTE/COMPTE_RESA" />
+      <nodes>
+        <classShapeMoniker Id="6f262e90-a887-4fbb-b157-87b00cf11dd2" />
+        <classShapeMoniker Id="62181bc0-3153-469e-97e5-c8b00713817e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.25 : 3.78449625651042); (4.25 : 3.78449625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ReservationDataContext/ETAT_RESA/ETAT_RESA_RESA" />
+      <nodes>
+        <classShapeMoniker Id="576265ff-0b3f-48ea-b5b9-220808fcdad0" />
+        <classShapeMoniker Id="62181bc0-3153-469e-97e5-c8b00713817e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.25 : 7.625); (3.25 : 6.10740397135417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ReservationDataContext/HEBERGEMENT/HEBERGEMENT_RESA" />
+      <nodes>
+        <classShapeMoniker Id="c1a1da7b-002e-40a1-a523-b42491bc9b55" />
+        <classShapeMoniker Id="62181bc0-3153-469e-97e5-c8b00713817e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2fa394c4-9abe-44cf-a2dd-f609a9bc4c9c" absoluteBounds="2.375, 0.875, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/ReservationDataContext/SEMAINE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="25c363c0-9323-4b7c-aaa9-b6517d921222" absoluteBounds="2.39, 1.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.3125 : 2.06899251302083); (3.3125 : 3.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ReservationDataContext/SEMAINE/SEMAINE_RESA" />
+      <nodes>
+        <classShapeMoniker Id="2fa394c4-9abe-44cf-a2dd-f609a9bc4c9c" />
+        <classShapeMoniker Id="62181bc0-3153-469e-97e5-c8b00713817e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8a75560e-04c1-4a37-9c03-b96d8f826718" absoluteBounds="5.875, 9.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/ReservationDataContext/TYPE_HEB" />
+      <nestedChildShapes>
+        <elementListCompartment Id="518c3c18-9171-4305-a14b-fc28eabd808f" absoluteBounds="5.8900000000000006, 9.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.875 : 9.72199625651042); (4.25 : 9.72199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ReservationDataContext/TYPE_HEB/TYPE_HEB_HEBERGEMENT" />
+      <nodes>
+        <classShapeMoniker Id="8a75560e-04c1-4a37-9c03-b96d8f826718" />
+        <classShapeMoniker Id="c1a1da7b-002e-40a1-a523-b42491bc9b55" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,91 @@
+﻿@model Association_VVA.Models.HEBERGEMENT
+@using Association_VVA.Controllers
+@{
+    Layout = "~/Views/_Layout1.cshtml";
+}
+
+<h2 class="centrer">Modifier un hebergement</h2><br />
+<img src="~/photoHeberge/@Model.PHOTOHEB" class="mx-auto d-block" style="width:50%; height:50%" /><br /><br />
+<div align="center" class="container">
+    <form action="/Gestionnaire/ModifierHebergement" method="post" enctype="multipart/form-data">
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="customFile" name="filename" />
+            <label class="custom-file-label" for="customFile">Photo d'hébergement</label>
+        </div>
+
+        <div class="form-group">
+            <label for="type">Type d'hébergement:</label>
+            <select class="form-control" name="type" id="type" required>
+                <option selected value="@Model.TYPE_HEB.CODETYPEHEB">@Model.TYPE_HEB.NOMTYPEHEB</option>
+                @foreach (var th in GestionnaireController.LesTypesNoUtiliser(Model.NOHEB))
+                {
+                    <option value="@th.CODETYPEHEB">@th.NOMTYPEHEB</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="nomHeberge">Nom hébergement:</label>
+            <input class="form-control" type="text" name="nomHeberge" id="nomHeberge" placeholder="Nom hébergement" value="@Model.NOMHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="noPlaceHeb">Nombre de place:</label>
+            <input class="form-control" type="number" name="noPlaceHeb" id="noPlaceHeb" placeholder="Nombre de place" value="@Model.NBPLACEHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="surface">Surface hébergement:</label>
+            <input class="form-control" type="number" name="surface" id="surface" placeholder="Surface hébergement:" value="@Model.SURFACEHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="annee">Année:</label>
+            <input class="form-control" type="number" min="1000" max="9999" name="annee" id="annee" placeholder="Année" value="@Model.ANNEEHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="secteur">Secteur d'hebergement:</label>
+            <input class="form-control" type="text" name="secteur" id="secteur" placeholder="Secteur hébergement:" value="@Model.SECTEURHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="orientation">Orientation d'hebergement:</label>
+            <input class="form-control" type="text" name="orientation" id="orientation" placeholder="Orientation hébergement:" value="@Model.ORIENTATIONHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="etat">État d'hebergement:</label>
+            <input class="form-control" type="text" name="etat" id="etat" placeholder="État d'hebergement" value="@Model.ETATHEB" required />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description d'hebergement:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" style="resize:none" required>@Model.DESCRIHEB</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tarif">Tarif d'hebergement:</label>
+            <input class="form-control" type="number" name="tarif" id="tarif" placeholder="Tarif d'hebergement" value="@Convert.ToString(Model.TARIFSEMHEB).Replace(',','.')" required />
+        </div>
+
+        <div class="custom-control custom-checkbox mb-3">
+            @if (Model.INTERNET == true)
+            {
+                <input class="custom-control-input" id="internet" name="internet" type="checkbox" checked value="true" /><input name="internet" type="hidden" value="false" />
+            }
+            else
+            {
+                <input class="custom-control-input" id="internet" name="internet" type="checkbox" value="true" /><input name="internet" type="hidden" value="false" />
+            }
+
+            <label class="custom-control-label" for="internet">Internet</label>
+        </div>
+
+        <input type="hidden" name="idHeb" id="idHeb" value="@Model.NOHEB" />
+
+        <input class="btn btn-warning" type="submit" name="Inscrire" id="Insrire" value="MODIFIER"/>
+
+    </form>
+</div>
+

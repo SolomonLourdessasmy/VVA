@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Association_VVA.Models.HEBERGEMENT>
+
+@{
+    Layout = "~/Views/_Layout1.cshtml";
+}
+
+<h2 style="text-decoration-line:underline; text-align:center">Liste d'hébergement</h2>
+<br />
+<div class="centrer">
+    <a class="btn btn-primary" href="/Gestionnaire/NouveauHebergement">Nouveau Hebergement</a>
+</div>
+<br /><br />
+<div class="row card-deck">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="~/photoHeberge/@item.PHOTOHEB" alt="Card image cap" width="250" height="200">
+                    <p><strong>Nom:</strong> @item.NOMHEB</p>
+                    <p><strong>Type:</strong> @item.TYPE_HEB.NOMTYPEHEB</p>
+                    <p><strong>Nombre de place:</strong> @item.NBPLACEHEB</p>
+                    <p><strong>La surface:</strong> @item.SURFACEHEB</p>
+                    <p><strong>L'année de construction:</strong> @item.ANNEEHEB</p>
+                    <p><strong>Le secteur:</strong> @item.SECTEURHEB</p>
+                    <p><strong>L'orientation:</strong> @item.ORIENTATIONHEB<p>
+                    <p><strong>L'état:</strong> @item.ETATHEB</p>
+                    <p><strong>Le tarif:</strong> @item.TARIFSEMHEB €</p>
+                    @if (item.INTERNET == true)
+                    {
+                        <p>l'internet est disponible</p>
+                    }
+                    else
+                    {
+                        <p>l'internet est non disponible</p>
+                    }
+                        <div align="center">
+                            <form action="/Gestionnaire/SupprimerHebergement" method="post">
+                                <input type="hidden" value="@item.NOHEB" name="id" id="id" />
+                                <input class="btn btn-danger" type="submit" name="suppression" id="suppression" value="Supprimer" />
+                            </form>
+                            <br />
+                            <a href="/Gestionnaire/ModifierHebergement/@item.NOHEB" class="btn btn-primary">Modifier</a><br /><br />
+                            <a href="/Gestionnaire/Nouvelle_Reservation/@item.NOHEB" class="btn btn-primary">A réserver</a>
+                        </div>
+                </div>
+            </div>
+            <br />
+        </div>
+    }
+</div>
+<br /><br />
+<div class="centrer">
+    <a class="btn btn-primary centrer" href="/Gestionnaire/NouveauHebergement">Nouveau Hebergement</a>
+</div>
+      
+
+

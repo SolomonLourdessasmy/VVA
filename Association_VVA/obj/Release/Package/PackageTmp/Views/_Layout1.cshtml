@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>VILLAGE VACNCES ALPES</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Custom.css" />
+    <link rel="shortcut icon" type="image/png" href="~/logo/VVA-icon-1.png">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md bg-success navbar-dark fixed-top">
+            <a class="navbar-brand" href="/Gestionnaire/Detail"><img src="~/logo/VVA-icon-1.png" width="25" height="25"> VILLAGE VACANCES ALPES</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/Gestionnaire/Detail">Les hébergements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Gestionnaire/NouveauHebergement">Nouveau hébergement</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Gestionnaire/Reservation">Réservation</a></li>
+                    @if (Session["userAdmin"] == null)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Compte/Connexion">Connexion</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Gestionnaire/Deconnexion">Déconnexion</a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    <footer class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom">
+        <p class="couleurBlanc">&copy; @DateTime.Now.Date.ToLongDateString() - ASSOCIATION - VVA</p>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+
+    <!--Code du javascript (jQuery) pour le carrousel-->
+    <script>
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    <!--Code du javascript (jQuery) pour la modification d'une réservation (logement, la période et l'éatat de résavertion)-->
+    <script>
+        $(document).ready(function () {
+            $("#noHeb").change(function () {
+                var noHeb = $(this).val();
+                $('#detailHeb').html("");
+                $('#dateDeb').html("");
+                $.ajax({
+                    method: "POST",
+                    url: "/Gestionnaire/GetunHerbergementAReserve",
+                    data: { noHeb: noHeb },
+                    success: function (data) {
+                        heb = JSON.parse(data);
+                        $('#detailHeb').html("<img class='card-img-top' src ='/photoHeberge/" + heb.photo + "' alt ='Card image cap'/> <p><strong>Nom:</strong> " + heb.nom + "</p> <p><strong>Type:</strong> " + heb.type + "</p> <p><strong>Nombre de place:</strong> " + heb.nbPlace + "</p> <p><strong>La surface:</strong> " + heb.surface + "</p> <p><strong>L'année de construction:</strong> " + heb.anneeConstruct + "</p> <p><strong>Le secteur:</strong> " + heb.secteur + "</p> <p><strong>L'orientation:</strong> " + heb.orientation + "<p> <p><strong>L'état:</strong> " + heb.etat + "</p> <p><strong>Le tarif:</strong> " + heb.tarif + " €</p> <p>" + heb.internet + "</p>");
+                        console.log(heb);
+                    }
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "/Gestionnaire/LesSemaines",
+                    data: { noHeb: noHeb },
+                    success: function (data) {
+                        $("#dateDeb").append("<option selected disabled value=''>Choissisez une date disponible</option>");
+                        d = JSON.parse(data);
+                        Console.log(d);
+                        $.each(d, function (index, row) {
+                            $("#dateDeb").append("<option value=" + row.date + ">" + row.date + "</option>");
+                        });
+                       
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

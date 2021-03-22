@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>VILLAGE VACNCES ALPES</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Custom.css" />
+    <link rel="shortcut icon" type="image/png" href="~/logo/VVA-icon-1.png">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md bg-info navbar-dark fixed-top">
+            <a class="navbar-brand" href="/"><img src="~/logo/VVA-icon-1.png" width="25" height="25"> VILLAGE VACANCES ALPES</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/Accueil/Index">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Accueil/Hebergement">Hébergement</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Compte/Mes_Reservation">Mes réservation</a></li>
+                    @if (Session["user"] == null)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Compte/Connexion">Connexion</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Compte/Deconnexion">Déconnexion</a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom">
+        <p class="couleurBlanc">&copy; @DateTime.Now.Date.ToLongDateString() - ASSOCIATION - VVA</p>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+</body>
+</html>

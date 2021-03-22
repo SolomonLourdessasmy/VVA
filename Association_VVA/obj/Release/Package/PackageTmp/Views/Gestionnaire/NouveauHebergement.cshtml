@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Association_VVA.Models.TYPE_HEB>
+
+@{
+    Layout = "~/Views/_Layout1.cshtml";
+}
+
+
+<div align="center" class="container">
+    <h2 style="text-decoration-line:underline; text-align:center">Nouveau hébergement</h2><br />
+    <form action="/Gestionnaire/NouveauHebergement" method="post" enctype="multipart/form-data">
+
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="customFile" name="filename" required />
+            <label class="custom-file-label" for="customFile">Photo d'hébergement de type: jpg, png, gif, jpeg.</label>
+        </div>
+        <span style="color:red">@ViewBag.FileError</span>
+        <div class="form-group">
+            <label for="type">Type d'hébergement:</label>
+            <select class="form-control" name="type" id="type" required>
+                <option disabled selected>Choisir un type d'hébergement</option>
+                @foreach (var th in Model)
+                {
+                    <option value="@th.CODETYPEHEB">@th.NOMTYPEHEB</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="nomHeberge">Nom hébergement:</label>
+            <input class="form-control" type="text" name="nomHeberge" id="nomHeberge" placeholder="Nom hébergement" value="@Session["nomHeberge"]" required />
+        </div>
+
+        <div class="form-group">
+            <label for="noPlaceHeb">Nombre de place:</label>
+            <input class="form-control" type="number" name="noPlaceHeb" id="noPlaceHeb" placeholder="Nombre de place" value="@Session["noPlaceHeb"]" required />
+        </div>
+
+        <div class="form-group">
+            <label for="surface">Surface hébergement:</label>
+            <input class="form-control" type="number" name="surface" id="surface" placeholder="Surface hébergement:" value="@Session["surface"]" required />
+        </div>
+
+        <div class="form-group">
+            <label for="annee">Année:</label>
+            <input class="form-control" type="number" min="1000" max="9999" name="annee" id="annee" placeholder="Année" value="@Session["annee"]" required />
+        </div>
+        <span style="color:red">@ViewBag.YearError</span>
+        <div class="form-group">
+            <label for="secteur">Secteur d'hebergement:</label>
+            <input class="form-control" type="text" name="secteur" id="secteur" placeholder="Secteur hébergement:" value="@Session["secteur"]" required />
+        </div>
+
+        <div class="form-group">
+            <label for="orientation">Orientation d'hebergement:</label>
+            <input class="form-control" type="text" name="orientation" id="orientation" placeholder="Orientation hébergement:" value="@Session["orientation"]" required />
+        </div>
+
+        <div class="form-group">
+            <label for="etat">État d'hebergement:</label>
+            <input class="form-control" type="text" name="etat" id="etat" placeholder="État d'hebergement" value="@Session["etat"]" required />
+        </div>
+         
+        <div class="form-group">
+            <label for="description">Description d'hebergement:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" style="resize:none" required>@Session["description"]</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tarif">Tarif d'hebergement:</label>
+
+            <input class="form-control" type="number" step="0.01" name="tarif" id="tarif" placeholder="Tarif d'hebergement" value="@Session["tarif"]" required />
+        </div>
+        <span style="color:red">@ViewBag.tarifError</span>
+        <div class="custom-control custom-checkbox mb-3">
+            @if (ViewBag.net != null && ViewBag.net == "true")
+            {
+                <input class="custom-control-input" id="internet" name="internet" type="checkbox" checked value="true" /><input name="internet" type="hidden" value="false" />
+            }
+            else
+            {
+                <input class="custom-control-input" id="internet" name="internet" type="checkbox" value="true" /><input name="internet" type="hidden" value="false" />
+            }
+
+            <label class="custom-control-label" for="internet">Internet</label>
+        </div>
+
+        <input class="btn btn-primary" type="submit" name="Inscrire" id="Insrire" value="ENREGISTRER" />
+
+    </form>
+
+   
+</div>
+
+
+

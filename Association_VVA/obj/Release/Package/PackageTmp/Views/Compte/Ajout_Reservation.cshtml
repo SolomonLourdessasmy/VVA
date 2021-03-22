@@ -1,0 +1,63 @@
+﻿@model Association_VVA.Models.HEBERGEMENT
+@using Association_VVA.Controllers
+@{
+
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h1 style="text-decoration-line:underline; text-align:center">Le formulaire de réservation d'un hébergement pour une semaine</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row card-deck">
+                <div class="card col-lg-3">
+                    <img class="card-img-top" src="~/photoHeberge/@Model.PHOTOHEB" alt="Card image cap" width="250" height="200">
+                    <div class="card-body">
+                        <p>Nom: <strong>@Model.NOMHEB</strong></p>
+                        <p>Type: @Model.TYPE_HEB.NOMTYPEHEB</p>
+                        <p>Nombre de place: @Model.NBPLACEHEB</p>
+                        <p>@Model.SURFACEHEB</p>
+                        <p>@Model.ANNEEHEB</p>
+                        <p>@Model.SECTEURHEB</p>
+                        <p>@Model.ORIENTATIONHEB<p>
+                        <p>@Model.ETATHEB</p>
+                        <p>@Model.TARIFSEMHEB €</p>
+                        @if (Model.INTERNET == true)
+                        {
+                            <p>l'internet est disponible</p>
+                        }
+                        else
+                        {
+                            <p>l'internet est non disponible</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <form action="/Compte/Ajout_Reservation" method="post">
+                <div class="form-group">
+                    <label for="dateDispo">Date disponible</label>
+                    <select class="form-control" name="dateDispo" id="dateDispo" required>
+                        <option disabled selected>Choisir une date pour réserver</option>
+                        @foreach (var d in CompteController.lesSamediDispo(Model.NOHEB))
+                        {
+                            <option value="@d.ToShortDateString()">@d.ToShortDateString()</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nbOccupant">Nombre d'occupant:</label>
+                    <input class="form-control" type="number" name="nbOccupant" id="nbOccupant" placeholder="Nombre d'occupant" required />
+                </div>
+                
+                <label>Montant d'arrhes: @ViewBag.arrhes</label>
+
+                <input type="hidden" name="idHeb" id="idHeb" value="@Model.NOHEB" />
+
+                <input class="btn btn-primary" type="submit" name="reserver" id="reserver" value="Réserver" />
+            </form>
+        </div>
+    </div>
+</div>
